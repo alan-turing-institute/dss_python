@@ -154,13 +154,13 @@ class CffiApiUtil(object):
         ptr = self.ffi.new('double**')
         cnt = self.ffi.new('int32_t[2]')
         func(ptr, cnt, *args)
-        res = np.fromstring(self.ffi.buffer(ptr[0], cnt[0] * 8), dtype=np.float)
+        res = np.fromstring(self.ffi.buffer(ptr[0], cnt[0] * 8), dtype=float)
         self.lib.DSS_Dispose_PDouble(ptr)
         return res
 
     def get_float64_gr_array(self):
         ptr, cnt = self.gr_float64_pointers
-        return np.fromstring(self.ffi.buffer(ptr[0], cnt[0] * 8), dtype=np.float)
+        return np.frombuffer(self.ffi.buffer(ptr[0], cnt[0] * 8), dtype=float)
 
     def get_int32_array(self, func, *args):
         ptr = self.ffi.new('int32_t**')
